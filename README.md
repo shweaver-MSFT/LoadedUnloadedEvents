@@ -27,24 +27,28 @@ private void OnUnloaded(object sender, RoutedEventArgs e)
         var lastLoadedArgs = element.GetLastLoadedEventArgs();
         if (lastLoadedArgs != null)
         {
-            HandleLoaded(lastLoadedArgs);
+            HandleLoaded(sender, lastLoadedArgs);
         }
+        
+        HandleUnloaded(sender, e);
     }
-    
-    HandleUnloaded(e);
 }
 
 private void OnLoaded(object sender, RoutedEventArgs e)
 {
-    HandleLoaded(e);
-
     if (sender is FrameworkElement element)
     {
+        HandleLoaded(sender, e);
+    
         var lastUnloadedArgs = element.GetLastUnloadedEventArgs();
         if (lastUnloadedArgs != null)
         {
-            HandleUnloaded(lastUnloadedArgs);
+            HandleUnloaded(sender, lastUnloadedArgs);
         }
     }
 }
+
+private void HandleUnloaded(object sender, RoutedEventArgs e) { ... }
+
+private void HandleLoaded(object sender, RoutedEventArgs e) { ... }
 ```
